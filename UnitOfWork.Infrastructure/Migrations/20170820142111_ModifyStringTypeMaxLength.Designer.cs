@@ -11,9 +11,10 @@ using UnitOfWork;
 namespace UnitOfWork.Migrations
 {
     [DbContext(typeof(UnitOfWorkDbContext))]
-    partial class UnitOfWorkDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170820142111_ModifyStringTypeMaxLength")]
+    partial class ModifyStringTypeMaxLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using UnitOfWork.Configurations;
 using UnitOfWork.Customer;
 using UnitOfWork.Goods;
 using UnitOfWork.ShoppingCart;
@@ -24,16 +25,11 @@ namespace UnitOfWork
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<Customer.Customer>()
-                .HasOne(c => c.ShoppingCart)
-                .WithOne(s => s.Customer)
-                .HasForeignKey<ShoppingCart.ShoppingCart>(s => s.CustomerId);
-
-            builder.Entity<Customer.Customer>().HasMany(c => c.ShippingAddresses);
-            builder.Entity<ShoppingCart.ShoppingCart>().HasMany(sc => sc.ShoppingCartLines).WithOne(cl => cl.ShoppingCart);
-            builder.Entity<ShoppingCartLine>().HasOne(scl => scl.Goods);
-
-            builder.Entity<Goods.Goods>().HasOne(g => g.GoodsCategory).WithMany(gc => gc.GoodsList);
+            builder.ApplyConfiguration(new CustomerConfiguration());
+            builder.ApplyConfiguration(new GoodsConfiguration());
+            builder.ApplyConfiguration(new GoodsCategoryConfiguration());
+            builder.ApplyConfiguration(new ShoppingCartConfiguration());
+            builder.ApplyConfiguration(new ShoppingCartLineConfiguration());
         }
     }
 }
