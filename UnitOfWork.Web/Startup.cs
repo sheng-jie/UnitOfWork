@@ -42,6 +42,8 @@ namespace UnitOfWork.Web
 
             services.AddTransient<ICustomerAppService, CustomerAppService>();
 
+            services.AddMvc();
+
             //var serviceProvider = services.BuildServiceProvider();
 
             //var repository = serviceProvider.GetService<ICustomerAppService>();
@@ -55,15 +57,14 @@ namespace UnitOfWork.Web
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
 
-            var customer = new Customer.Customer { CustomerName = "shengjie" };
-            using (var scope = app.ApplicationServices.CreateScope())
+            app.UseMvc(routes =>
             {
-                // run tests using scope
-
-                var customerAppService = scope.ServiceProvider.GetService<ICustomerAppService>();
-                customerAppService.CreateCustomer(customer);
-            }
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
 
             app.Run(async (context) =>
             {
