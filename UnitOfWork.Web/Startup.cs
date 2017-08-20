@@ -39,10 +39,8 @@ namespace UnitOfWork.Web
             
             //使用扩展方法注入Uow依赖
             services.AddUnitOfWork<UnitOfWorkDbContext>();
-
             //使用默认方法注入Uow依赖
             //services.AddScoped<IUnitOfWork, UnitOfWork<UnitOfWorkDbContext>>();
-            //services.AddScoped<IUnitOfWork<UnitOfWorkDbContext>, UnitOfWork<UnitOfWorkDbContext>>();
 
             //注入泛型仓储
             services.AddTransient(typeof(IRepository<>), typeof(EfCoreRepository<>));
