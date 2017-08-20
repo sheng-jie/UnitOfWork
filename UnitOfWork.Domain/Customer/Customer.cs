@@ -10,9 +10,7 @@ namespace UnitOfWork.Customer
             RegisterDate = DateTime.Now;
         }
         public string CustomerName { get; set; }
-
-        public int ShoppingCartId { get; set; }
-
+        
         public virtual ShoppingCart.ShoppingCart ShoppingCart { get; set; }
 
         public virtual List<ContactAddress> ShippingAddresses { get; set; }
