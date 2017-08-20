@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\UnitOfWork.Application\UnitOfWork.Application.csproj" />
     <ProjectReference Include="..\UnitOfWork.Infrastructure\UnitOfWork.Infrastructure.csproj" />
   </ItemGroup>
 

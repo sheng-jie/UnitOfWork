@@ -9,6 +9,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using UnitOfWork.Customer;
 using UnitOfWork.Repositories;
 
 namespace UnitOfWork.Web
@@ -27,17 +28,23 @@ namespace UnitOfWork.Web
         {
             //This is the only service available at ConfigureServices
 
-            var connection = new SqliteConnection(Configuration.GetConnectionString("DefaultConnection"));
-            connection.Open();
+            //var connection = new SqliteConnection(Configuration.GetConnectionString("InMemoryConnection"));
+            //connection.Open();
+
+            //services.AddDbContext<UnitOfWorkDbContext>(options =>
+            //    options.UseSqlite(connection));
 
             services.AddDbContext<UnitOfWorkDbContext>(options =>
-                options.UseSqlite(connection));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddTransient(typeof(IRepository<>), typeof(EfCoreRepository<>));
             services.AddTransient(typeof(IRepository<,>), typeof(EfCoreRepository<,>));
 
-            var serviceProvider = services.BuildServiceProvider();
+            services.AddTransient<ICustomerAppService, CustomerAppService>();
 
-            var repository = serviceProvider.GetService<IRepository<Customer.Customer>>();
+            //var serviceProvider = services.BuildServiceProvider();
+
+            //var repository = serviceProvider.GetService<ICustomerAppService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,9 +55,19 @@ namespace UnitOfWork.Web
                 app.UseDeveloperExceptionPage();
             }
 
+
+            var customer = new Customer.Customer { CustomerName = "shengjie" };
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                // run tests using scope
+
+                var customerAppService = scope.ServiceProvider.GetService<ICustomerAppService>();
+                customerAppService.CreateCustomer(customer);
+            }
+
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Hello World!");
+                await context.Response.WriteAsync("Hello World!" );
             });
         }
     }
