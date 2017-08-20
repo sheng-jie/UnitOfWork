@@ -9,6 +9,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using UnitOfWork.Repositories;
 
 namespace UnitOfWork.Web
 {
@@ -31,6 +32,12 @@ namespace UnitOfWork.Web
 
             services.AddDbContext<UnitOfWorkDbContext>(options =>
                 options.UseSqlite(connection));
+            services.AddTransient(typeof(IRepository<>), typeof(EfCoreRepository<>));
+            services.AddTransient(typeof(IRepository<,>), typeof(EfCoreRepository<,>));
+
+            var serviceProvider = services.BuildServiceProvider();
+
+            var repository = serviceProvider.GetService<IRepository<Customer.Customer>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
