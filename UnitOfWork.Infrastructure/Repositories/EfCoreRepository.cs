@@ -34,13 +34,18 @@ namespace UnitOfWork.Repositories
 
         public override TEntity Insert(TEntity entity)
         {
-            return Table.Add(entity).Entity;
+            var newEntity = Table.Add(entity).Entity;
+            _dbContext.SaveChanges();
+            return newEntity;
         }
 
         public override TEntity Update(TEntity entity)
         {
             AttachIfNot(entity);
             _dbContext.Entry(entity).State = EntityState.Modified;
+
+            _dbContext.SaveChanges();
+
             return entity;
         }
 
@@ -48,6 +53,8 @@ namespace UnitOfWork.Repositories
         {
             AttachIfNot(entity);
             Table.Remove(entity);
+
+            _dbContext.SaveChanges();
         }
 
         public override void Delete(TPrimaryKey id)

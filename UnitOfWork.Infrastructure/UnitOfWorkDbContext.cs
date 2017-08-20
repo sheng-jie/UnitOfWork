@@ -26,8 +26,8 @@ namespace UnitOfWork
 
             builder.Entity<Customer.Customer>()
                 .HasOne(c => c.ShoppingCart)
-                .WithOne(sc => sc.Customer)
-                .HasForeignKey<ShoppingCart.ShoppingCart>(c => c.CustomerId);
+                .WithOne(s => s.Customer)
+                .HasForeignKey<ShoppingCart.ShoppingCart>(s => s.CustomerId);
 
             builder.Entity<Customer.Customer>().HasMany(c => c.ShippingAddresses);
             builder.Entity<ShoppingCart.ShoppingCart>().HasMany(sc => sc.ShoppingCartLines).WithOne(cl => cl.ShoppingCart);

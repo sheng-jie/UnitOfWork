@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 
@@ -12,10 +13,9 @@ namespace UnitOfWork.Migrations
                 name: "Customers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CustomerName = table.Column<string>(type: "TEXT", nullable: true),
-                    ShoppingCartId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -26,10 +26,10 @@ namespace UnitOfWork.Migrations
                 name: "GoodsCategories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Description = table.Column<string>(type: "TEXT", nullable: true),
-                    Name = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,17 +40,17 @@ namespace UnitOfWork.Migrations
                 name: "Addresses",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    City = table.Column<string>(type: "TEXT", nullable: true),
-                    ContactPhone = table.Column<string>(type: "TEXT", nullable: true),
-                    ContactRealName = table.Column<string>(type: "TEXT", nullable: true),
-                    County = table.Column<string>(type: "TEXT", nullable: true),
-                    CustomerId = table.Column<int>(type: "INTEGER", nullable: true),
-                    IsDefault = table.Column<bool>(type: "INTEGER", nullable: false),
-                    Province = table.Column<string>(type: "TEXT", nullable: true),
-                    Street = table.Column<string>(type: "TEXT", nullable: true),
-                    Zip = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContactPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContactRealName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    County = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CustomerId = table.Column<int>(type: "int", nullable: true),
+                    IsDefault = table.Column<bool>(type: "bit", nullable: false),
+                    Province = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Zip = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -67,9 +67,9 @@ namespace UnitOfWork.Migrations
                 name: "ShoppingCarts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CustomerId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CustomerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,13 +86,13 @@ namespace UnitOfWork.Migrations
                 name: "Goods",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Description = table.Column<string>(type: "TEXT", nullable: true),
-                    GoodsCategoryId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
-                    Price = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Stock = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GoodsCategoryId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    Stock = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -109,11 +109,11 @@ namespace UnitOfWork.Migrations
                 name: "ShoppingCartLines",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    GoodsId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Qty = table.Column<int>(type: "INTEGER", nullable: false),
-                    ShoppingCartId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    GoodsId = table.Column<int>(type: "int", nullable: false),
+                    Qty = table.Column<int>(type: "int", nullable: false),
+                    ShoppingCartId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
